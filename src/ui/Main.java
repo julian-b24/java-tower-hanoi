@@ -1,13 +1,16 @@
 package ui;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Main {
 	
 	public final static String INPUT_PATH = "data/input.txt";
+	public final static String OUTPUT_PATH = "data/output.txt";
 	
 	private int[] towers;
 	
@@ -30,9 +33,8 @@ public class Main {
 			for (Integer problem : problems) {
 				app.getSolutionTowerHanoi(problem);
 				System.out.println(app.getSolutions());
-				
 			}
-			
+			app.generateOutput();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -64,6 +66,8 @@ public class Main {
 		
 		//Setup the towers
 		towers[positionA] = disks;
+		towers[positionB] = 0;
+		towers[positionC] = 0;
 		
 		//Get solution of towers
 		getTowers();
@@ -72,51 +76,6 @@ public class Main {
 	}
 
 	private void getSolutionTowerHanoi(int disks, int origin, int goal, int temporal) {
-		
-		/*
-		//parámetros de entrada
-		System.out.println("param:" + "\n" + 
-							"disks = " + disks + "\n" + 
-							"origin = " + origin + "\n" + 
-							"goal = " + goal + "\n" +
-							"temporal = " + temporal + "\n");
-		if(disks == 1) {
-			goal.add(origin.remove(origin.size() - 1));
-			solutions += origin.size() + " " + temporal.size() + " " + goal.size() + "\n"; //+ " PASO BASE";
-			//estado de los parámetros después del caso base
-			System.out.println("PASO BASE ACABADO" + "\n" + "POST BASE \n" +
-					"origin = " + origin + "\n" + 
-					"goal = " + goal + "\n" +
-					"temporal = " + temporal + "\n");
-			
-		}else {
-			
-			//PASO 1
-			getSolutionTowerHanoi(disks - 1, origin, temporal, goal);
-			//solutions += origin.size() + " " + temporal.size() + " " + goal.size() + "\n";  //+ " PASO 1 \n";
-			System.out.println("PASO 1 ACABADO" + "\n" + "POST PASO 1 \n" +
-					"origin = " + origin + "\n" + 
-					"goal = " + goal + "\n" +
-					"temporal = " + temporal + "\n");
-			
-			//PASO 2
-			goal.add(origin.remove(origin.size() - 1));
-			System.out.println("PASO 2 ACABADO" + "\n" + "POST PASO 2 \n" +
-					"origin = " + origin + "\n" + 
-					"goal = " + goal + "\n" +
-					"temporal = " + temporal + "\n");
-			
-			solutions += origin.size() + " " + temporal.size() + " " + goal.size() + "\n"; //" PASO 2" + "\n";
-			
-			//PASO 3
-			getSolutionTowerHanoi(disks - 1, temporal, goal, origin);
-			//solutions += " PASO 3 \n";
-			System.out.println("PASO 3 ACABADO" + "\n" + "POST PASO 3 \n" +
-					"origin = " + origin + "\n" + 
-					"goal = " + goal + "\n" +
-					"temporal = " + temporal + "\n");
-			
-		}*/
 		
 		if(disks > 0) {
 			getSolutionTowerHanoi(disks - 1, origin, temporal, goal);
@@ -128,6 +87,14 @@ public class Main {
 
 	}
 	
+	public void generateOutput() throws FileNotFoundException {
+		
+		PrintWriter pw = new PrintWriter(OUTPUT_PATH);
+		pw.println(solutions);
+		pw.close();
+	}
+	
+	
 	public String getSolutions() {
 		return solutions;
 	}
@@ -135,6 +102,4 @@ public class Main {
 	public void getTowers() {
 		solutions += towers[positionA] + " " + towers[positionB] + " " + towers[positionC] + "\n";
 	}
-	
-
 }
