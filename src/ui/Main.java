@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Main {
 	
+	//Modify the content of input.txt according to the problem that will be tested
 	public final static String INPUT_PATH = "data/input.txt";
 	public final static String OUTPUT_PATH = "data/output.txt";
 	
@@ -32,7 +33,6 @@ public class Main {
 			ArrayList<Integer> problems = app.getInput();
 			for (Integer problem : problems) {
 				app.getSolutionTowerHanoi(problem);
-				System.out.println(app.getSolutions());
 			}
 			app.generateOutput();
 			
@@ -93,7 +93,6 @@ public class Main {
 		pw.println(solutions);
 		pw.close();
 	}
-	
 	
 	public String getSolutions() {
 		return solutions;
